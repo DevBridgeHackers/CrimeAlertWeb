@@ -1,0 +1,10 @@
+﻿@if (Request.IsAuthenticated) {
+    <text>
+        Hello, @User.Identity.Name
+        @Html.ActionLink("Log off", MVC.Account.LogOff())
+    </text>
+} else {
+    <ul>
+        <li>@Html.ActionLink("Log in", MVC.Account.Login())</li>
+    </ul>
+}

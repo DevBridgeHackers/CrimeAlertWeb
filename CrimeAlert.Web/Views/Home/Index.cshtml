@@ -1,0 +1,34 @@
+﻿@model List<CrimeAlert.Web.Models.ReportViewModel>
+@{
+    ViewBag.Title = "Home Page";
+}
+<h1>Public reports feed</h1>
+
+<h1>@ViewBag.TestData</h1>
+
+<div style="margin: 20px 0;">
+    @{var i = 0;}
+    @foreach(var file in Model)
+    {
+        string s;
+        {
+            s = (i%3 == 1) ? "alertItemSmallRowLast" : "";
+        }
+        i++;
+        <div class="alertItemSmall @s">
+                                <div class="alertItemSmallPhoto">
+                                    <a href="@file.FileUrl">
+                                        <img src="@file.FileUrl" style="width: 172px;" />
+                                    </a>
+                                </div>
+                                <div class="alertItemSmallMap" style="display:none;" data-longitude="@file.Longtitude" data-latitude="@file.Latitude" data-title="@file.CreatedOn.ToShortDateString()">
+                                    <div style="width:172px; height:229px;"></div>
+                                </div>
+                                <div class="alertItemSmallControls">
+                                    <div class="date">@file.CreatedOn.ToShortDateString()</div>
+                                    <div class="seeMore"><a href="@file.FileUrl">See more</a></div>
+                                </div>
+                            </div>
+    }
+
+</div>

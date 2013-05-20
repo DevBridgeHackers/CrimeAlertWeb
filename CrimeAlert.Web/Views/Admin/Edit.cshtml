@@ -1,0 +1,77 @@
+﻿@model CrimeAlert.Web.Models.ReportViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Report</legend>
+        
+        
+
+        <div>
+            <img src="@Model.FileUrl" style="width: 300px;" alt=""/>
+        </div>
+        
+         <div id="map_canvas" style="width:300px; height:300px"></div>
+           
+                                
+
+           
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AdminComment)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AdminComment)
+            @Html.ValidationMessageFor(model => model.AdminComment)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsAproved)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsAproved)
+            @Html.ValidationMessageFor(model => model.IsAproved)
+        </div>
+
+        @Html.HiddenFor(model => model.Id)
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquery")
+
+    
+                                    <script type="text/javascript">
+                                        $(function()
+                                        {
+                                            var myLatlng = new google.maps.LatLng(@Model.Latitude, @Model.Longtitude);
+                                        var mapOptions = {
+                                            center: myLatlng,
+                                            zoom: 12,
+                                            mapTypeId: google.maps.MapTypeId.ROADMAP
+                                        };
+                                        var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+                                        var marker = new google.maps.Marker({
+                                            position: myLatlng,
+                                            map: map,
+                                            title:"@Model.CreatedOn.ToShortDateString()"
+                                        });
+                                    });
+                                </script>
+}

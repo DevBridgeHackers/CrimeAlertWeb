@@ -1,0 +1,15 @@
+obj
+bin
+deploy
+deploy/*
+_ReSharper.*
+*.resharper
+*.suo
+*.cache
+~$*
+*.user
+packages
+*.user
+logs
+aspnet_client
+Configs/*

@@ -1,0 +1,396 @@
+﻿
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>CRIME ALERT</title>
+        
+        <script type="text/javascript" src="/Content/scripts/jquery-1.4.2-p1.min.js"></script>
+        <script type="text/javascript" src="/Content/scripts/scripts.js"></script>
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBIlkthKLpvU3oXUJffGOAoVuj2wzcEQ5k&sensor=false"></script>
+        
+        <link rel="stylesheet" href="/Content/styles/style.css" type="text/css" />
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+        
+        <!--[if lte IE 7]>
+        <link rel="stylesheet" href="styles/style_ie67.css" type="text/css" />
+        <![endif]-->
+        <!--[if lte IE 6]>
+        <style type="text/css">
+            .png { behavior:url("scripts/iepngfix.htc"); } 
+        </style>
+        <![endif]-->
+    </head>
+    
+    <body>
+        <div id="header">
+            <div class="centerContent">
+                <table id="headerTable" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td class="headerTd">
+                            <div id="headerLeft">
+                                <div id="logo"><!-- --></div>
+                                <div class="headerLeftLink">@Html.ActionLink("Home", MVC.Home.Index())</div>
+                                <div class="headerLeftLink">@Html.ActionLink("About", MVC.Home.About())</div>
+                                <div class="headerLeftLink">@Html.ActionLink("Contact", MVC.Home.Contact())</div>
+                                                            @if(User.Identity.IsAuthenticated)
+                            {
+                                <div class="headerLeftLink">@Html.ActionLink("Admin", MVC.Admin.Index())</div>
+                            }
+                            </div>
+                        </td>
+                        <td class="headerTd">
+                            <div id="headerRight">
+                                <div id="headerRightLinks">
+                                    <a href="#">Register</a>
+                                    <span class="splitter">|</span>
+                                    <a href="#">Get the app</a>
+                                </div>
+                                @if(!User.Identity.IsAuthenticated) {
+                                    <div id="loginForm">
+                                        <div class="fl loginFormInputUsername">
+                                            <div class="inputTitle">Username:</div>
+                                            <div class="input"><input type="text" name="user" placeholder="Enter your user name" /></div>
+                                        </div>
+                                        <div class="fl loginFormInputPassword">
+                                            <div class="inputTitle">Password:</div>
+                                            <div class="input"><input type="password" name="password" placeholder="and password" /></div>
+                                        </div>
+                                        <div class="fl loginFormSubmit">
+                                            <div class="inputTitle">&nbsp;</div>
+                                            <input class="submitBtn" type="submit" value="Login" />
+                                        </div>
+                                    
+                                        <div><!-- --></div>
+                                    </div>
+                                    } else
+                                {
+                                    @User.Identity.Name
+                                }
+                            </div>
+                            
+                            <div class="clear"><!-- --></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <div id="page">
+            <div class="centerContent">
+                <div id="sidebar">
+                    <div id="search">
+                        <div class="searchTitle">
+                            Search for recent alerts in your area
+                        </div>
+                        <div>
+                            <div class="fl">
+                                <div class="input"><input type="input" name="search" placeholder="Try your address, city or zip" /></div>
+                            </div>
+                            <div class="fr">
+                                <input class="submitBtn" type="submit" value="Search" />
+                            </div>
+                            <div class="clear"><!-- --></div>
+                        </div>
+                    </div>
+                    
+                    <div class="sidebarSplitter"><!-- --></div>
+                    
+                    <div id="latestAlert">
+                        <div id="latestAlertTitle">
+                            <span id="latestAlertTitleText">
+                                <a href="#">
+                                    Latest Alert
+                                </a>
+                            </span>
+                            <span class="alertAge">
+                                (30 minutes ago)
+                            </span>
+                        </div>
+                        <div>
+                            <a href="#">
+                                <img src="/images/photo1.jpg" width="337" height="252" />
+                            </a>
+                        </div>
+                        <div id="latestAlertControls">
+                            <a href="#">
+                                <div class="controlMapIt">
+                                    Map it
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="controlShare">
+                                    Share on facebook
+                                </div>
+                            </a>
+                            
+                            <div class="clear"><!-- --></div>
+                        </div>
+                        <div id="latestAlertComment">
+                            <div id="latestAlertCommentText">
+                                Nulla adipiscing turpis vitae enim tempus sodales. Etiam sapien enim, sollicitudin a ultrices at, eleifend in magna. Praesent sodales cursus interdum. Praesent fringilla lobortis lectus, id semper lorem interdum ac. Aenean lobortis, mi non tincidunt semper, dolor tellus pulvinar odio, eget cursus justo eros in purus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. 
+                            </div>
+                            
+                            <div id="latestAlertCommentsSummary">
+                                <span id="latestAlertCommentsCount">
+                                    ( 96 Comments )
+                                </span>
+                                <a href="#">
+                                    <span id="latestAlertCommentsAddNew">
+                                        add a comment
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="contentBorder">
+                    <div id="contentBorderTop"><!-- --></div>
+                    <div id="content">
+                        <div id="contentHeader">
+                            <div id="contentTitle">
+                                Crime alerts
+                            </div>
+                            
+                            <div id="contentControls">
+                                <a href="#">
+                                    <div id="controlPhotos" class="contentControl contentControlActive">
+                                        Photos
+                                    </div>
+                                </a>
+                                
+                                <a href="#">
+                                    <div id="controlMapView" class="contentControl">
+                                        Map view
+                                    </div>
+                                </a>
+                            </div>
+                            
+                            <div class="clear"><!-- --></div>
+                        </div>
+                        
+                        <div class="listAlerts">
+                            @RenderBody()
+                            @*                            <div class="alertItemSmall ">
+                                <div class="alertItemSmallPhoto">
+                                    <a href="#">
+                                        <img src="images/photo2.jpg" />
+                                    </a>
+                                </div>
+                                <div class="alertItemSmallMap" style="display:none;" data-longitude="54.434908" data-latitude="26.471558" data-title="Alert 1">
+                                    <div style="width:172px; height:128px;"></div>
+                                </div>
+                                <div class="alertItemSmallControls">
+                                    <div class="date">October 8, 2012</div>
+                                    <div class="seeMore"><a href="#">See more</a></div>
+                                </div>
+                            </div>
+                            <div class="alertItemSmall ">
+                                <div class="alertItemSmallPhoto">
+                                    <a href="#">
+                                        <img src="images/photo2.jpg" />
+                                    </a>
+                                </div>
+                                <div class="alertItemSmallMap" style="display:none;" data-longitude="54.434908" data-latitude="26.471558" data-title="Alert 1">
+                                    <div style="width:172px; height:128px;"></div>
+                                </div>
+                                <div class="alertItemSmallControls">
+                                    <div class="date">October 8, 2012</div>
+                                    <div class="seeMore"><a href="#">See more</a></div>
+                                </div>
+                            </div>
+                            <div class="alertItemSmall alertItemSmallRowLast">
+                                <div class="alertItemSmallPhoto">
+                                    <a href="#">
+                                        <img src="images/photo2.jpg" />
+                                    </a>
+                                </div>
+                                <div class="alertItemSmallMap" style="display:none;" data-longitude="54.434908" data-latitude="26.471558" data-title="Alert 1">
+                                    <div style="width:172px; height:128px;"></div>
+                                </div>
+                                <div class="alertItemSmallControls">
+                                    <div class="date">October 8, 2012</div>
+                                    <div class="seeMore"><a href="#">See more</a></div>
+                                </div>
+                            </div>
+                            <div class="alertItemSmall ">
+                                <div class="alertItemSmallPhoto">
+                                    <a href="#">
+                                        <img src="images/photo2.jpg" />
+                                    </a>
+                                </div>
+                                <div class="alertItemSmallMap" style="display:none;" data-longitude="54.434908" data-latitude="26.471558" data-title="Alert 1">
+                                    <div style="width:172px; height:128px;"></div>
+                                </div>
+                                <div class="alertItemSmallControls">
+                                    <div class="date">October 8, 2012</div>
+                                    <div class="seeMore"><a href="#">See more</a></div>
+                                </div>
+                            </div>
+                            <div class="alertItemSmall ">
+                                <div class="alertItemSmallPhoto">
+                                    <a href="#">
+                                        <img src="images/photo2.jpg" />
+                                    </a>
+                                </div>
+                                <div class="alertItemSmallMap" style="display:none;" data-longitude="54.434908" data-latitude="26.471558" data-title="Alert 1">
+                                    <div style="width:172px; height:128px;"></div>
+                                </div>
+                                <div class="alertItemSmallControls">
+                                    <div class="date">October 8, 2012</div>
+                                    <div class="seeMore"><a href="#">See more</a></div>
+                                </div>
+                            </div>
+                            <div class="alertItemSmall alertItemSmallRowLast">
+                                <div class="alertItemSmallPhoto">
+                                    <a href="#">
+                                        <img src="images/photo2.jpg" />
+                                    </a>
+                                </div>
+                                <div class="alertItemSmallMap" style="display:none;" data-longitude="54.434908" data-latitude="26.471558" data-title="Alert 1">
+                                    <div style="width:172px; height:128px;"></div>
+                                </div>
+                                <div class="alertItemSmallControls">
+                                    <div class="date">October 8, 2012</div>
+                                    <div class="seeMore"><a href="#">See more</a></div>
+                                </div>
+                            </div>
+                            <div class="alertItemSmall ">
+                                <div class="alertItemSmallPhoto">
+                                    <a href="#">
+                                        <img src="images/photo2.jpg" />
+                                    </a>
+                                </div>
+                                <div class="alertItemSmallMap" style="display:none;" data-longitude="54.434908" data-latitude="26.471558" data-title="Alert 1">
+                                    <div style="width:172px; height:128px;"></div>
+                                </div>
+                                <div class="alertItemSmallControls">
+                                    <div class="date">October 8, 2012</div>
+                                    <div class="seeMore"><a href="#">See more</a></div>
+                                </div>
+                            </div>
+                            <div class="alertItemSmall ">
+                                <div class="alertItemSmallPhoto">
+                                    <a href="#">
+                                        <img src="images/photo2.jpg" />
+                                    </a>
+                                </div>
+                                <div class="alertItemSmallMap" style="display:none;" data-longitude="54.434908" data-latitude="26.471558" data-title="Alert 1">
+                                    <div style="width:172px; height:128px;"></div>
+                                </div>
+                                <div class="alertItemSmallControls">
+                                    <div class="date">October 8, 2012</div>
+                                    <div class="seeMore"><a href="#">See more</a></div>
+                                </div>
+                            </div>
+                            <div class="alertItemSmall alertItemSmallRowLast">
+                                <div class="alertItemSmallPhoto">
+                                    <a href="#">
+                                        <img src="images/photo2.jpg" />
+                                    </a>
+                                </div>
+                                <div class="alertItemSmallMap" style="display:none;" data-longitude="54.434908" data-latitude="26.471558" data-title="Alert 1">
+                                    <div style="width:172px; height:128px;"></div>
+                                </div>
+                                <div class="alertItemSmallControls">
+                                    <div class="date">October 8, 2012</div>
+                                    <div class="seeMore"><a href="#">See more</a></div>
+                                </div>
+                            </div>
+                            <div class="alertItemSmall ">
+                                <div class="alertItemSmallPhoto">
+                                    <a href="#">
+                                        <img src="images/photo2.jpg" />
+                                    </a>
+                                </div>
+                                <div class="alertItemSmallMap" style="display:none;" data-longitude="54.434908" data-latitude="26.471558" data-title="Alert 1">
+                                    <div style="width:172px; height:128px;"></div>
+                                </div>
+                                <div class="alertItemSmallControls">
+                                    <div class="date">October 8, 2012</div>
+                                    <div class="seeMore"><a href="#">See more</a></div>
+                                </div>
+                            </div>
+                            <div class="alertItemSmall ">
+                                <div class="alertItemSmallPhoto">
+                                    <a href="#">
+                                        <img src="images/photo2.jpg" />
+                                    </a>
+                                </div>
+                                <div class="alertItemSmallMap" style="display:none;" data-longitude="54.434908" data-latitude="26.471558" data-title="Alert 1">
+                                    <div style="width:172px; height:128px;"></div>
+                                </div>
+                                <div class="alertItemSmallControls">
+                                    <div class="date">October 8, 2012</div>
+                                    <div class="seeMore"><a href="#">See more</a></div>
+                                </div>
+                            </div>
+                            <div class="alertItemSmall alertItemSmallRowLast">
+                                <div class="alertItemSmallPhoto">
+                                    <a href="#">
+                                        <img src="images/photo2.jpg" />
+                                    </a>
+                                </div>
+                                <div class="alertItemSmallMap" style="display:none;" data-longitude="54.434908" data-latitude="26.471558" data-title="Alert 1">
+                                    <div style="width:172px; height:128px;"></div>
+                                </div>
+                                <div class="alertItemSmallControls">
+                                    <div class="date">October 8, 2012</div>
+                                    <div class="seeMore"><a href="#">See more</a></div>
+                                </div>
+                            </div>
+                            <div class="alertItemSmall ">
+                                <div class="alertItemSmallPhoto">
+                                    <a href="#">
+                                        <img src="images/photo2.jpg" />
+                                    </a>
+                                </div>
+                                <div class="alertItemSmallMap" style="display:none;" data-longitude="54.434908" data-latitude="26.471558" data-title="Alert 1">
+                                    <div style="width:172px; height:128px;"></div>
+                                </div>
+                                <div class="alertItemSmallControls">
+                                    <div class="date">October 8, 2012</div>
+                                    <div class="seeMore"><a href="#">See more</a></div>
+                                </div>
+                            </div>
+                            <div class="alertItemSmall ">
+                                <div class="alertItemSmallPhoto">
+                                    <a href="#">
+                                        <img src="images/photo2.jpg" />
+                                    </a>
+                                </div>
+                                <div class="alertItemSmallMap" style="display:none;" data-longitude="54.434908" data-latitude="26.471558" data-title="Alert 1">
+                                    <div style="width:172px; height:128px;"></div>
+                                </div>
+                                <div class="alertItemSmallControls">
+                                    <div class="date">October 8, 2012</div>
+                                    <div class="seeMore"><a href="#">See more</a></div>
+                                </div>
+                            </div>
+                            <div class="alertItemSmall alertItemSmallRowLast">
+                                <div class="alertItemSmallPhoto">
+                                    <a href="#">
+                                        <img src="images/photo2.jpg" />
+                                    </a>
+                                </div>
+                                <div class="alertItemSmallMap" style="display:none;" data-longitude="54.434908" data-latitude="26.471558" data-title="Alert 1">
+                                    <div style="width:172px; height:128px;"></div>
+                                </div>
+                                <div class="alertItemSmallControls">
+                                    <div class="date">October 8, 2012</div>
+                                    <div class="seeMore"><a href="#">See more</a></div>
+                                </div>
+                            </div>*@
+                        </div>
+
+                    </div>
+                    <div id="contentBorderBottom"><!-- --></div>
+                </div>
+                <div class="clear"><!-- --></div>
+            </div>
+        </div>
+                            @RenderSection("Scripts",false)
+    </body>
+</html>

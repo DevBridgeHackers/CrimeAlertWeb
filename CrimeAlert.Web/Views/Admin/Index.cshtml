@@ -1,0 +1,36 @@
+﻿@model CrimeAlert.Web.Models.AdminViewModel
+@{
+    ViewBag.Title = "Police page";
+}
+
+<h1>Admin panel - should contain list of all reports</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>File</th>
+            <th>Date</th>
+            <th>Comment</th>
+            <th>Is Public</th>
+            <th>Police comment</th>
+            <th>Approved</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var report in Model.Reports)
+        {
+            <tr>
+                <td>@report.Name</td>
+                <td><a href="@report.FileUrl" target="_blank">Photo/Video</a></td>
+                <td>@report.CreatedOn</td>
+                <td>@report.Comment</td>
+                <td>@report.IsPublic</td>
+                <td>@report.AdminComment</td>
+                <td>@report.IsAproved</td>
+                <td>@Html.ActionLink("Edit", MVC.Admin.Edit(report.Id))</td>
+            </tr>
+        }
+    </tbody>
+</table> 
