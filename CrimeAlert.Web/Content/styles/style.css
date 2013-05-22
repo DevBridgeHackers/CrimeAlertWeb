@@ -335,7 +335,7 @@ a {
 .listAlerts .alertItemSmall .alertItemSmallControls {
     padding-top:6px;
     text-transform:uppercase;
-    font-weight:10px;
+    font-weight:bold;
     font-size:10px;
 }
 .listAlerts .alertItemSmall .alertItemSmallControls .date {

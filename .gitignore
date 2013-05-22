@@ -12,6 +12,6 @@ packages
 *.user
 logs
 aspnet_client
+/CrimeAlert.Web/Configs/uploadService.config
 /CrimeAlert.Web/Configs/connectionStrings.config
 /CrimeAlert.Web/Configs/sessionState.config
-/CrimeAlert.Web/Configs/uploadService.config

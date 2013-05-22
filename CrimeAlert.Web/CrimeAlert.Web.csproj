@@ -220,6 +220,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Configs\readme.txt" />
     <Content Include="Content\images\blank.gif" />
     <Content Include="Content\images\comment.gif" />
     <Content Include="Content\images\content.gif" />
